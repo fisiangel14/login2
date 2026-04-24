@@ -10,7 +10,7 @@ def fisrtLogin(request):
         nombre = request.POST.get('username')
         passWord = request.POST.get('password')
 
-        userAuth = authenticate(username=nombre, password=passWord)
+        userAuth = authenticate(request, username=nombre, password=passWord)
         print("------------")
         print(userAuth)
         print("------------")
