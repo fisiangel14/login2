@@ -67,7 +67,7 @@ def api_login_view(request):
     
     data = json.loads(request.body)
 
-    username = data.get('username')
+    username = data.get('username', '').strip()
     password = data.get('password')
 
     if not username or not password:
@@ -87,3 +87,31 @@ def api_login_view(request):
 def api_register_view(request):
     if request.method != 'POST':
         return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({'ok': False, 'error': 'JSON inválido'}, status=400)
+
+    username = data.get('username', '').strip()
+    password = data.get('password')
+    password_confirm = data.get('password_confirm')
+
+    if not username or not password or not password_confirm:
+        return JsonResponse({'ok':False, 'error':'Campos obligatorios'}, status=400)
+    
+    if password != password_confirm:
+        return JsonResponse({'ok':False,'error':'Las contraseñas no coinciden'}, status=400)
+    
+    if  User.objects.filter(username=username).exists():
+        return JsonResponse({'ok':False, 'error':'El usuario ya existe'},status=400)
+    
+    User.objects.create_user(username=username, password=password)
+
+    return JsonResponse({
+        'ok': True,
+        'message': 'Usuario creado correctamente'
+    },status=201)
+
+
+
