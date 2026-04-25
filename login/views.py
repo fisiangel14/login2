@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def login_view(request):
@@ -55,3 +58,32 @@ def register_view(request):
         return redirect('login')
     
     return render(request,'login/register.html')
+
+#API
+@csrf_exempt
+def api_login_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
+    
+    data = json.loads(request.body)
+
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return JsonResponse({'ok':False, 'error':'Campos obligatorios'}, status=400)
+    
+    user = authenticate(request, username=username, password=password)
+
+    if user:
+        return JsonResponse({
+            'ok': True,
+            'message': 'Login correcto'
+        })
+    
+    return JsonResponse({'ok':False,'error':'Credenciales incorrectas'}, status=401)
+
+@csrf_exempt
+def api_register_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)

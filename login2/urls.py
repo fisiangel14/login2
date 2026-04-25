@@ -28,4 +28,6 @@ urlpatterns = [
     path('logout', login_views.logout_view, name='logout'),
     path('solicitud/', solicitud_views.solicitud_producto, name='solicitud_producto'),
     path('register/', login_views.register_view, name='register'),
+    path('api/login/',login_views.api_login_view, name='api_login'),
+    path('api/register/', login_views.api_register_view, name='api_register')
 ]
