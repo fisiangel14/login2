@@ -1,4 +1,8 @@
-<form action="{% url 'login' %}" method="POST">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<!-- #milogin -->
+<!-- <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <label for="">Usuario</label>
     <input type="text" name="username">
@@ -7,4 +11,40 @@
     <input type="text" name="password">
 
     <button>Iniciar sesion</button>
-</form>
+</form> -->
+
+<!-- #login con bootstrap -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+
+      <div class="card p-4 shadow">
+        <h3 class="text-center mb-3">Inicio de Sesión</h3>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input type="text" name="username" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" name="password" class="form-control">
+          </div>
+
+          {% if error %}
+            <div class="alert alert-danger">
+              {{ error }}
+            </div>
+          {% endif %}
+
+          <button class="btn btn-primary w-100">Ingresar</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
