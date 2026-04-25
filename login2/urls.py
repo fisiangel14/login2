@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from login import views
+from login import views as login_views
 from django.shortcuts import redirect
+from solicitud import views as solicitud_views
 
 urlpatterns = [
     path('', lambda request: redirect('login')),
     path('admin/', admin.site.urls),
-    path('login/',views.login_view, name='login'),
-    path('home/', views.home, name='home'),
-    path('logout', views.logout_view, name='logout')
+    path('login/', login_views.login_view, name='login'),
+    path('home/', login_views.home, name='home'),
+    path('logout', login_views.logout_view, name='logout'),
+    path('solicitud/', solicitud_views.solicitud_producto, name='solicitud_producto'),
 ]

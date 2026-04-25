@@ -18,7 +18,8 @@ def login_view(request):
             return redirect('home')
         return render(request, 'login/login.html',{'error':"siga intentanto xddd nosea hacker"})
     
-    return render(request, 'login/login.html')
+    next_url = request.GET.get('next', '')
+    return render(request, 'login/login.html', {'next': next_url})
 
 @login_required
 def home(request):
