@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def fisrtLogin(request):
+def login_view(request):
     if request.user.is_authenticated:
         return redirect('home')
     
@@ -11,18 +12,18 @@ def fisrtLogin(request):
         passWord = request.POST.get('password')
 
         userAuth = authenticate(request, username=nombre, password=passWord)
-        print("------------")
-        print(userAuth)
-        print("------------")
-
+        
         if userAuth:
             login(request, userAuth)
             return redirect('home')
-
         return render(request, 'login/login.html',{'error':"siga intentanto xddd nosea hacker"})
     
-    print(request.user.is_authenticated)
     return render(request, 'login/login.html')
 
+@login_required
 def home(request):
     return render(request, 'login/home.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
