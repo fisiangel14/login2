@@ -21,7 +21,7 @@
       <div class="card p-4 shadow">
         <h3 class="text-center mb-3">Inicio de Sesión</h3>
 
-        <form method="POST">
+        <form action="{% url 'login' %}" method="POST">
           {% csrf_token %}
 
           <div class="mb-3">
@@ -41,8 +41,20 @@
               {{ error }}
             </div>
           {% endif %}
+          
+          <div class="container text-center">
+            <div class="row align-items-start">
+                <div class="col">   
 
-          <button class="btn btn-primary w-100">Ingresar</button>
+                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                </div>
+                <div class="col">   
+
+                    <a href="{% url 'register' %}" class="btn btn-secondary w-100">Crear usuario</a>
+                </div>
+            </div>
+        </div>
+        
         </form>
 
       </div>
