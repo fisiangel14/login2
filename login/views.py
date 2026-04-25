@@ -10,13 +10,18 @@ def login_view(request):
     if request.method == 'POST':
         nombre = request.POST.get('username')
         passWord = request.POST.get('password')
+        next_url = request.POST.get('next', '')
 
         userAuth = authenticate(request, username=nombre, password=passWord)
         
         if userAuth:
             login(request, userAuth)
-            return redirect('home')
-        return render(request, 'login/login.html',{'error':"siga intentanto xddd nosea hacker"})
+            return redirect(next_url or 'home')
+        
+        return render(request, 'login/login.html',{
+            'error':"Usuario o contraseña incorrectos", 
+            'next': next_url
+        })
     
     next_url = request.GET.get('next', '')
     return render(request, 'login/login.html', {'next': next_url})
