@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: siuda_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: siuda_db
+      POSTGRES_USER: siuda_user
+      POSTGRES_PASSWORD: siuda_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - siuda_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  siuda_postgres_data:
