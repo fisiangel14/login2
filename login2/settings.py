@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'solicitud',
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,3 +126,13 @@ LOGIN_URL = '/login/'
 SESSION_COOKIE_AGE = 60 * 60 * 24  # 1 día
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

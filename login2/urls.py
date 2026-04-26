@@ -19,6 +19,10 @@ from django.urls import path
 from login import views as login_views
 from django.shortcuts import redirect
 from solicitud import views as solicitud_views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('', lambda request: redirect('login')),
@@ -29,5 +33,8 @@ urlpatterns = [
     path('solicitud/', solicitud_views.solicitud_producto, name='solicitud_producto'),
     path('register/', login_views.register_view, name='register'),
     path('api/login/',login_views.api_login_view, name='api_login'),
-    path('api/register/', login_views.api_register_view, name='api_register')
+    path('api/register/', login_views.api_register_view, name='api_register'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/me/', login_views.api_me, name='api_me'),
 ]
